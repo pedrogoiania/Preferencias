@@ -11,12 +11,17 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
+
 public class MainActivity extends AppCompatActivity {
 
     private EditText et1;
     private EditText et2;
 
-    private static final String ARQ_PREFS = "teste";
+    private static final String ARQ_PREFS = "SharedPreferencesOnApp";
+    private static final String PREF_STR1 = "PREF_STR1";
+    private static final String PREF_STR2 = "PREF_STR2";
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,43 +31,44 @@ public class MainActivity extends AppCompatActivity {
         et1 = (EditText) findViewById(R.id.editText);
         et2 = (EditText) findViewById(R.id.editText2);
 
-        //Obtendo objeto de preferencias
+
+
+//        Obtendo objeto de preferencias
         SharedPreferences prefs = getSharedPreferences(ARQ_PREFS, 0);
         //
-        et1.setText(prefs.getString("PREF_STR1", "PREF STR 1 - OK"));
-        et2.setText(prefs.getString("PREF_STR2", "PREF STR 2 - OK"));
+        et1.setText(prefs.getString(PREF_STR1, ""));
+        et2.setText(prefs.getString(PREF_STR2, ""));
 
+        //click para intent com a preferencesActivity
 
-//        //click para intent com a preferencesActivity
-//
-//        Button b = (Button) findViewById(R.id.button);
-//
-//        b.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent i = new Intent(MainActivity.this, Preferences.class);
-//                startActivity(i);
-//            }
-//        });
-//
-//        // -- click para intent com a preferencesActivity @end
-//
-//        final TextView tv = (TextView) findViewById(R.id.textView);
-//        final CheckBox cb = (CheckBox) findViewById(R.id.checkBox);
-//
-//        prefs = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
-//        tv.setText(prefs.getString("et", ""));
-//        cb.setChecked(prefs.getBoolean("cb", false));
-//
-//        prefs.registerOnSharedPreferenceChangeListener(new SharedPreferences.OnSharedPreferenceChangeListener() {
-//            @Override public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,String key){
-//                if (key.equals("et")) {
-//                    tv.setText(sharedPreferences.getString(key, tv.getText().toString()));
-//                } else if (key.equals("cb")) {
-//                    cb.setChecked(sharedPreferences.getBoolean("cb", cb.isChecked()));
-//                }
-//            }
-//        });
+        Button b = (Button) findViewById(R.id.button);
+
+        b.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MainActivity.this, Preferences.class);
+                startActivity(i);
+            }
+        });
+
+        // -- click para intent com a preferencesActivity @end
+
+        final TextView tv = (TextView) findViewById(R.id.textView);
+        final CheckBox cb = (CheckBox) findViewById(R.id.checkBox);
+
+        prefs = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+        tv.setText(prefs.getString("et", ""));
+        cb.setChecked(prefs.getBoolean("cb", false));
+
+        prefs.registerOnSharedPreferenceChangeListener(new SharedPreferences.OnSharedPreferenceChangeListener() {
+            @Override public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,String key){
+                if (key.equals("et")) {
+                    tv.setText(sharedPreferences.getString(key, tv.getText().toString()));
+                } else if (key.equals("cb")) {
+                    cb.setChecked(sharedPreferences.getBoolean("cb", cb.isChecked()));
+                }
+            }
+        });
     }
 
     @Override
@@ -71,8 +77,9 @@ public class MainActivity extends AppCompatActivity {
         //Obtendo objeto de preferencias
         SharedPreferences prefs = getSharedPreferences(ARQ_PREFS, 0 );
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putString("PREF_STR1", et1.getText().toString());
-        editor.putString("PREF_STR2", et2.getText().toString());
+        editor.putString(PREF_STR1, et1.getText().toString());
+        editor.putString(PREF_STR2, et2.getText().toString());
+        editor.commit();
     }
 
     @Override
@@ -81,8 +88,9 @@ public class MainActivity extends AppCompatActivity {
         //Obtendo objeto de preferencias
         SharedPreferences prefs = getSharedPreferences(ARQ_PREFS, 0 );
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putString("PREF_STR1", et1.getText().toString());
-        editor.putString("PREF_STR2", et2.getText().toString());
+        editor.putString(PREF_STR1, et1.getText().toString());
+        editor.putString(PREF_STR2, et2.getText().toString());
+        editor.commit();
     }
 
 }
